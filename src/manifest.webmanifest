@@ -1,6 +1,6 @@
 {
-    "name": "ng14-nest-template",
-    "short_name": "ng14-nest-template",
+    "name": "ng-nest-template",
+    "short_name": "ng-nest-template",
     "theme_color": "#1976d2",
     "background_color": "#fafafa",
     "display": "standalone",

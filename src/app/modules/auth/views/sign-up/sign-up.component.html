@@ -1,0 +1,55 @@
+<form [formGroup]="authForm" novalidate autocomplete="off" (ngSubmit)="onSubmit()">
+    <p>
+        <label>Email:</label>
+        <br>
+        <input
+            type="text"
+            formControlName="email"
+            placeholder="Your email here..."
+        >
+    </p>
+    <p>
+        <label>Your first name:</label>
+        <br>
+        <input
+            type="text"
+            formControlName="name"
+            placeholder="Your name here..."
+        >
+    </p>
+    <p>
+        <label>Your last name:</label>
+        <br>
+        <input
+            type="text"
+            formControlName="last_name"
+            placeholder="Your last name here..."
+        >
+    </p>
+    <p>
+        <label>Enter password:</label>
+        <br>
+        <input
+            type="password"
+            formControlName="password"
+            placeholder="Your password here..."
+            autocomplete="new-password"
+        >
+    </p>
+    <p>
+        <label>Repeat password:</label>
+        <br>
+        <input
+            type="password"
+            formControlName="password_rep"
+            placeholder="Repeat your password here..."
+            autocomplete="new-password"
+        >
+    </p>
+    <p>
+        <button type="submit">Sign up</button>
+    </p>
+    <p>
+        <a [routerLink]="['/auth', 'sign-in']">Sign in</a>
+    </p>
+</form>

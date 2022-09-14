@@ -1,18 +1,16 @@
 {
-    "name": "ng14-nest-template",
+    "name": "ng-nest-template",
     "version": "1.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
-        "build": "ng build",
-        "watch": "ng build --watch --configuration development",
+        "setup": "npm install --force",
         "test": "ng test",
-        "predev:ssr": "npx mkdirp ./dist/ng14-nest-template/config && cp ./environments/.env.local ./dist/ng14-nest-template/config/.env",
-        "dev:ssr": "ng run ng14-nest-template:serve-ssr",
-        "serve:ssr": "node dist/ng14-nest-template/server/main.js",
-        "prebuild:ssr": "npx mkdirp ./dist/ng14-nest-template/config && cp ./environments/.env.production ./dist/ng14-nest-template/config/.env && ngcc",
-        "build:ssr": "ng build && ng run ng14-nest-template:server",
-        "prerender": "ng run ng14-nest-template:prerender"
+        "predev:ssr": "npx mkdirp ./dist/ng-nest-template/config && cp ./environments/.env.local ./dist/ng-nest-template/config/.env",
+        "dev:ssr": "ng run ng-nest-template:serve-ssr",
+        "serve:ssr": "node dist/ng-nest-template/server/main.js",
+        "prebuild:ssr": "npx mkdirp ./dist/ng-nest-template/config && cp ./environments/.env.production ./dist/ng-nest-template/config/.env && ngcc",
+        "build:ssr": "ng build && ng run ng-nest-template:server",
+        "prerender": "ng run ng-nest-template:prerender"
     },
     "private": true,
     "dependencies": {

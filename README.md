@@ -1,18 +1,45 @@
-# Ng14NestTemplate
+# Angular/NestJS Quickstart project template
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.2.
+This project includes the following features:
+- Server Side Rendering
+- Progressive Web Application
+- Database connection
+- User authorization using JWT
+
+## How to start?
+
+- Clone the project then run `npm run setup` to install the dependencies.
+
+NB!: You'll see lots of warnings because of conflicting peer dependencies and/or unsupported engines. That's because the package @nestjs/ng-universal is almost dead and it has very slow support response. It'll be fixed as soon as this package is updated or someone releases alternative to it.
+
+- Check credentials for connecting to MySQL/MariaDB database in `/environments/.env.local`.
+- Create database `myapp` or change the name in the environment file.
+- (Optional) Change primary account data in the environment file with credentials of your choosing.
+
+
+## Creating your own project
+
+If you want to use this quickstart template for project of your own, follow these steps:
+
+- Remove "origin" remote - `git remote remove origin`
+- Add your own "origin" remote - `git remote add origin [address-of-your-remote-repo]`
+- Rename the project - replace every occurrence of "ng-nest-template" with the name of your project (use small caps and dashes instead of spaces)
+- Change database connection settings in `/environments/.env.local` and `/environments/.env.production`
+- Replace primary account credentials with some of your choosing
+
 
 ## Development server
 
-Run `npm run dev:ssr` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `npm run dev:ssr` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files. 
+
 
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+You can create Angular modules/components/directives etc. and NestJS modules/controllers/services etc. as it's documented - [Angular CLI](https://angular.io/cli) [NestJS CLI](https://docs.nestjs.com/)
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `ng build:ssr` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
 
@@ -25,3 +52,5 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+To get more help on the NestJS CLI use `nest --help` or go check out the [NestJS CLI Overview and Command Reference](https://docs.nestjs.com/cli/overview) page.

@@ -20,26 +20,26 @@ export class AuthController {
     async checkLogggedIn(
         @GetRequesterToken() token: string,
     ): Promise<IUser> {
-        if (!token)
+        // if (!token)
             return null;
 
-        try {
-            const user: IUser = this._jwtService.verify<IUser>(token);
-            if (user) {
-                const db_user: UserEntity = await this._usersService.view(user.id);
-                Object.keys(db_user.serialize()).forEach(key => {
-                    user[key] = db_user[key];
-                });
+        // try {
+        //     const user: IUser = this._jwtService.verify<IUser>(token);
+        //     if (user) {
+        //         const db_user: UserEntity = await this._usersService.view(user.id);
+        //         Object.keys(db_user.serialize()).forEach(key => {
+        //             user[key] = db_user[key];
+        //         });
 
-                return new User({
-                    ...db_user.serialize(),
-                    accessToken: token
-                });
-            } else
-                throw new ForbiddenException(`User doesn't exist!`);
-        } catch (error) {
-            return null;
-        }
+        //         return new User({
+        //             ...db_user.serialize(),
+        //             accessToken: token
+        //         });
+        //     } else
+        //         throw new ForbiddenException(`User doesn't exist!`);
+        // } catch (error) {
+        //     return null;
+        // }
     }
 
     @Post('sign-up')
@@ -55,14 +55,14 @@ export class AuthController {
         @Body() credentials: SignInDto,
     ) {
         const user = await this._usersService.signIn({ ...credentials });
-        
+
         const token = await this._jwtService.signAsync({ ...credentials }, {
             expiresIn: credentials.remember_me ? JWTConfig.expiresInRememberMe : JWTConfig.expiresIn
         });
         const token_data: IUser = this._jwtService.verify(token);
         const expires = new Date(token_data.exp * 1000);
         response.cookie('auth', token, { httpOnly: true, expires, sameSite: 'strict' });
-        
+
         response.json(user);
         return response;
     }
