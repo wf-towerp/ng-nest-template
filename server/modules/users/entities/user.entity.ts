@@ -22,12 +22,6 @@ export class UserEntity extends BaseEntity implements IUser {
     last_name: string;
 
     @Column({
-        default: '',
-        nullable: true,
-    })
-    avatar: string;
-
-    @Column({
         unique: true
     })
     email: string;
@@ -48,22 +42,6 @@ export class UserEntity extends BaseEntity implements IUser {
         default: '',
     })
     salt: string;
-
-    @Column({
-        type: 'boolean',
-        nullable: false,
-        default: false
-    })
-    enabled: boolean;
-
-    @Column({
-        type: 'varchar',
-        length: 5,
-        nullable: true,
-        default: 'en_US'
-    })
-    interface_language: string;
-
 
     @CreateDateColumn()
     created_at: Date;

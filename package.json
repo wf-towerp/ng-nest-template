@@ -10,7 +10,12 @@
         "serve:ssr": "node dist/ng-nest-template/server/main.js",
         "prebuild:ssr": "npx mkdirp ./dist/ng-nest-template/config && cp ./environments/.env.production ./dist/ng-nest-template/config/.env && ngcc",
         "build:ssr": "ng build && ng run ng-nest-template:server",
-        "prerender": "ng run ng-nest-template:prerender"
+        "prerender": "ng run ng-nest-template:prerender",
+        "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config ./server/config/typeorm-migrations.config.ts",
+        "migrations:create": "npm run typeorm:cli -- migration:create -n myapp",
+        "migrations:generate": "npm run typeorm:cli -- migration:generate -n myapp",
+        "migrations:run": "npm run typeorm:cli -- migration:run",
+        "migrations:revert": "npm run typeorm:cli -- migration:revert"
     },
     "private": true,
     "dependencies": {

@@ -24,7 +24,7 @@ async function bootstrap() {
         transform: true
     }));
     app.use(cookieParser());
-    await app.listen(process.env['PORT'] || process.env['INVOICES_PORT'] || 4000);
+    await app.listen(process.env['PORT'] || process.env['APP_PORT'] || 3000);
 }
 
 // Webpack will replace 'require' with '__webpack_require__'

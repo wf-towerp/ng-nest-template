@@ -5,6 +5,23 @@ This project includes the following features:
 - Progressive Web Application
 - Database connection
 - User authorization using JWT
+- Database migrations
+
+
+## Prerequisites
+
+You need to have installed NodeJS v16+.
+
+You need the following node packages installed globally:
+
+- @angular/cli
+- @nestjs/cli
+- ts-node
+
+Copy and paste this to install them:
+
+`npm install -g @angular/cli @nestjs/cli ts-node`
+
 
 ## How to start?
 
@@ -15,6 +32,7 @@ NB!: You'll see lots of warnings because of conflicting peer dependencies and/or
 - Check credentials for connecting to MySQL/MariaDB database in `/environments/.env.local`.
 - Create database `myapp` or change the name in the environment file.
 - (Optional) Change primary account data in the environment file with credentials of your choosing.
+- Run `npm run migrations:generate` to generate the initial state of the database then run `npm run migrations:run` to apply changes to the database.
 
 
 ## Creating your own project

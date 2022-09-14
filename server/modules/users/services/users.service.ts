@@ -1,6 +1,7 @@
-import { ForbiddenException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JWTConfig } from '@server/config';
+import { Superadmin } from '@server/config/initial-user.config';
 import { SignInDto, SignUpDto, UserCreateDto } from '../dto';
 import { UserUpdateDto } from '../dto/user-update.dto';
 import { UserEntity } from '../entities';
@@ -13,7 +14,18 @@ export class UsersService {
     constructor(
         private _jwtService: JwtService,
         private _usersRepository: UsersRepository,
-    ) { }
+    ) {
+        this._checkAvailableUsers();
+    }
+
+    private async _checkAvailableUsers() {
+        const users = await this._usersRepository.count();
+        if (!users) {
+            const admin = await this.signUp(Superadmin);
+            const user: UserEntity = await this.view(admin.id);
+            await user.save();
+        }
+    }
 
     async list() {
         return [];
@@ -56,9 +68,6 @@ export class UsersService {
 
         if (user) {
             const db_user = await this.view(user.id);
-
-            if (!db_user.enabled)
-                throw new ForbiddenException('Your account has no rights to login! Please, contact the administrator!');
 
             db_user.prev_login = db_user.last_login;
             db_user.last_login = new Date();
