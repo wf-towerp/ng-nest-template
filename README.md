@@ -72,3 +72,27 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 To get more help on the NestJS CLI use `nest --help` or go check out the [NestJS CLI Overview and Command Reference](https://docs.nestjs.com/cli/overview) page.
+
+
+# CHANGELOG
+
+## v1.1.0
+Refactored directories.
+
+Now all source code is in **/src** folder. Compiled files are in **/dist** folder (without folder with the name of the project).
+
+New directory structure is:
+
+**/src/browser** - the Angular front-end
+**/src/common** - common functions, shared by both front-end and server-side
+**/src/environments** - .env files
+**/src/migrations** - database migrations files
+**/src/server** - NestJS server-side code
+
+## v1.0.0
+First stable release with the following features:
+- Server Side Rendering
+- Progressive Web Application
+- Database connection
+- User authorization using JWT
+- Database migrations

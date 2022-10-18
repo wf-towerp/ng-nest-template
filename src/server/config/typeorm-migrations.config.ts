@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import dotenv from 'dotenv';
 import { resolve, join } from 'path';
-const env_path = resolve(process.cwd(), 'dist', 'ng-nest-template', 'config', '.env');
+const env_path = resolve(process.cwd(), 'dist', 'config', '.env');
 
 dotenv.config({
     path: env_path,
@@ -18,12 +18,12 @@ const TypeOrmConfigMigrations: TypeOrmModuleOptions = {
         join(__dirname, '..', '**', '*.entity{.ts,.js}'),
     ],
     migrations: [
-        join(__dirname, '..', 'migrations', '**', '*{.ts,.js}')
+        join(__dirname, '..', '..', 'migrations', '**', '*{.ts,.js}')
     ],
     migrationsTableName: 'migrations',
     cli: {
-        entitiesDir: 'server/**/*.entity{.ts,.js}',
-        migrationsDir: 'server/migrations',
+        entitiesDir: 'src/server/**/*.entity{.ts,.js}',
+        migrationsDir: 'src/migrations',
     }
 }
 

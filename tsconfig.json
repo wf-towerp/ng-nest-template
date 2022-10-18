@@ -28,19 +28,17 @@
         ],
         "paths": {
             "@common/*": [
-                "common/*"
+                "src/common/*"
             ],
             "@app/*": [
-                "src/app/*"
+                "src/browser/app/*"
             ],
             "@server/*": [
-                "server/*"
+                "src/server/*"
             ],
             "@env/*": [
+                "src/browser/environments/*",
                 "src/environments/*"
-            ],
-            "@models/*": [
-                "models/*"
             ]
         }
     },
