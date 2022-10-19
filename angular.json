@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "src",
     "projects": {
-        "ng-nest-template": {
+        "main-app": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -72,10 +72,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "ng-nest-template:build:production"
+                            "browserTarget": "main-app:build:production"
                         },
                         "development": {
-                            "browserTarget": "ng-nest-template:build:development"
+                            "browserTarget": "main-app:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "ng-nest-template:build"
+                        "browserTarget": "main-app:build"
                     }
                 },
                 "test": {
@@ -145,12 +145,12 @@
                     "builder": "@nguniversal/builders:ssr-dev-server",
                     "configurations": {
                         "development": {
-                            "browserTarget": "ng-nest-template:build:development",
-                            "serverTarget": "ng-nest-template:server:development"
+                            "browserTarget": "main-app:build:development",
+                            "serverTarget": "main-app:server:development"
                         },
                         "production": {
-                            "browserTarget": "ng-nest-template:build:production",
-                            "serverTarget": "ng-nest-template:server:production"
+                            "browserTarget": "main-app:build:production",
+                            "serverTarget": "main-app:server:production"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -164,12 +164,12 @@
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "ng-nest-template:build:production",
-                            "serverTarget": "ng-nest-template:server:production"
+                            "browserTarget": "main-app:build:production",
+                            "serverTarget": "main-app:server:production"
                         },
                         "development": {
-                            "browserTarget": "ng-nest-template:build:development",
-                            "serverTarget": "ng-nest-template:server:development"
+                            "browserTarget": "main-app:build:development",
+                            "serverTarget": "main-app:server:development"
                         }
                     },
                     "defaultConfiguration": "production"
