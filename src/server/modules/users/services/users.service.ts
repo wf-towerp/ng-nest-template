@@ -15,7 +15,7 @@ export class UsersService {
         private _jwtService: JwtService,
         private _usersRepository: UsersRepository,
     ) {
-        this._checkAvailableUsers();
+        // this._checkAvailableUsers();
     }
 
     private async _checkAvailableUsers() {
@@ -32,7 +32,7 @@ export class UsersService {
     }
 
     async view(id: number) {
-        return this._usersRepository.findOne(id);
+        return this._usersRepository.findOne({ where: { id } });
     }
 
     async create(userDataDto: UserCreateDto): Promise<IUser> {

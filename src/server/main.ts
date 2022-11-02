@@ -5,7 +5,7 @@ const env_path = resolve(__dirname, `../config/.env`);
 dotenv.config({
     path: env_path,
     encoding: 'utf8',
-    debug: true,
+    debug: false,
     override: true
 });
 
@@ -24,6 +24,7 @@ async function bootstrap() {
         transform: true
     }));
     app.use(cookieParser());
+
     await app.listen(process.env['PORT'] || process.env['APP_PORT'] || 3000);
 }
 

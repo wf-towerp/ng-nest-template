@@ -15,7 +15,7 @@ import { JWTConfig } from '@server/config';
     ],
     imports: [
         TypeOrmModule.forFeature([
-            UsersRepository,
+            // UsersRepository,
             UserEntity,
         ]),
         JwtModule.register({
@@ -27,9 +27,11 @@ import { JWTConfig } from '@server/config';
     ],
     providers: [
         UsersService,
+        UsersRepository,
     ],
     exports: [
         UsersService,
+        // UsersRepository,
     ]
 })
 export class UsersModule { }

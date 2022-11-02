@@ -42,6 +42,9 @@
             ]
         }
     },
+    "exclude": [
+        "src/migrations/*"
+    ],
     "angularCompilerOptions": {
         "fullTemplateTypeCheck": true,
         "strictInjectionParameters": true

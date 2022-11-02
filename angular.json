@@ -119,7 +119,7 @@
                             "@nestjs/websockets/socket-module",
                             "cache-manager",
                             "bcrypt",
-                            "mysql2"
+                            "pg"
                         ]
                     },
                     "configurations": {

@@ -4,7 +4,8 @@
         "outDir": "./out-tsc/app-server",
         "module": "commonjs",
         "types": [
-            "node"
+            "node",
+            "webpack-env"
         ],
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true
@@ -12,6 +13,9 @@
     "files": [
         "src/browser/main.server.ts",
         "src/server.ts"
+    ],
+    "include": [
+        "src/server/migrations"
     ],
     "angularCompilerOptions": {
         "entryModule": "./src/app/app.server.module#AppServerModule"
