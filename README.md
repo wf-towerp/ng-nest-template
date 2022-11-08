@@ -1,4 +1,7 @@
-# Angular/NestJS Quickstart project template
+# Angular/NestJS Quickstart project template (Multi-tenant edition)
+
+# Description
+The purpose of this branch is to setup environment for multi-tenant SааS using Postgres database. 
 
 This project includes the following features:
 - Server Side Rendering
@@ -6,10 +9,10 @@ This project includes the following features:
 - Database connection
 - User authorization using JWT
 - Database migrations
+- Multiple tenants using Postgres schemas
 
 
 ## Prerequisites
-
 You need to have installed NodeJS v16+.
 
 You need the following node packages installed globally:
@@ -24,15 +27,24 @@ Copy and paste this to install them:
 
 
 ## How to start?
+- Clone the project
+- Change branch by running `git checkout multi-tenant`
+- Run `npm run setup` to install the dependencies.
 
-- Clone the project then run `npm run setup` to install the dependencies.
+**NB!**: You'll see lots of warnings because of conflicting peer dependencies and/or unsupported engines. That's because the package @nestjs/ng-universal is almost dead and it has very slow support response. It'll be fixed as soon as this package is updated or someone releases alternative to it.
 
-NB!: You'll see lots of warnings because of conflicting peer dependencies and/or unsupported engines. That's because the package @nestjs/ng-universal is almost dead and it has very slow support response. It'll be fixed as soon as this package is updated or someone releases alternative to it.
-
-- Check credentials for connecting to MySQL/MariaDB database in `/environments/.env.local`.
+#### Setting up the database
+- Check credentials for connecting to Postgres database in `/environments/.env.local`.
 - Create database `myapp` or change the name in the environment file.
 - (Optional) Change primary account data in the environment file with credentials of your choosing.
-- Run `npm run migrations:generate` to generate the initial state of the database then run `npm run migrations:run` to apply changes to the database.
+- Run `npm run migrations:generate:core` to generate initial state of the "public" schema
+- Run `npm run migrations:generate:tenants` to generate the structure of the tenant schemas
+- Run `npm run migrations:run:core` to update the "public" schema
+
+#### Creating tenants
+- Our example tenant name is going to be called "test"
+- Create tenant host in "hosts" file (Linux - `/etc/hosts`, Windows - `C:\Windows\System32\drivers\etc\hosts`) by adding a new row `127.0.0.1 test.localhost` at the end of the file. For more information - [How to Edit Your Hosts File on Windows, Mac, or Linux](https://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/)
+- Create new database entry for the tenant in `public.tenants` table using your terminal or SQL client of your choosing. Insert into the column "name" the name of your tenant ("test" in our case). The name of your tenant should be the first alphanumeric part of the host, i.e. the host can be `test.com`, `test.example.com` even `test.something.example.co.uk`. The app is going to look at the string BEFORE the first dot in the host ("test" in all of the examples).
 
 
 ## Creating your own project
@@ -44,6 +56,7 @@ If you want to use this quickstart template for project of your own, follow thes
 - Rename the project - replace every occurrence of "ng-nest-template" with the name of your project (use small caps and dashes instead of spaces)
 - Change database connection settings in `/environments/.env.local` and `/environments/.env.production`
 - Replace primary account credentials with some of your choosing
+- Follow the steps above related to creating tenants
 
 
 ## Development server
