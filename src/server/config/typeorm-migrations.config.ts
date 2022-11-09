@@ -3,8 +3,6 @@ import dotenv from 'dotenv';
 import { resolve, join } from 'path';
 const env_path = resolve(process.cwd(), 'dist', 'config', '.env');
 
-console.log(`Hello from typeorm-migrations.config.ts!!!`);
-
 dotenv.config({
     path: env_path,
     encoding: 'utf8',

@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { TypeOrmConfig } from '@server/config';
 import { importAllFunctions } from '@server/tools';
-import { DataSource, DataSourceOptions } from 'typeorm';
+import { ConnectionNotFoundError, DataSource, DataSourceOptions } from 'typeorm';
 import { TenantsRepository } from '../repositories';
 
 @Injectable()
@@ -24,7 +24,6 @@ export class TenantsService {
                 const tenant = tenants[tenant_idx];
 
                 await _tenantsRepository.ensureSchema(tenant.name);
-                // await _tenantsRepository.ensureMigrationsTable(tenant.name, TypeOrmConfig.migrationsTableName || 'migrations');
 
                 if (!this._connections[tenant.name]) {
                     const options = {
@@ -41,6 +40,7 @@ export class TenantsService {
                     } as DataSourceOptions;
 
                     this._connections[tenant.name] = await new DataSource(options);
+                    await this._connections[tenant.name].initialize();
 
                     if (options.migrations.length)
                         await this._tenantsRepository.runMigrations(this._connections[tenant.name], options.migrations);
@@ -48,6 +48,16 @@ export class TenantsService {
             }
 
         })();
+    }
+
+    async getConnection(tenant: string) {
+        if (!this._connections[tenant])
+            throw new ConnectionNotFoundError(`Connection for tenant "${tenant}" not found!`);
+
+        if (!this._connections[tenant].isInitialized)
+            await this._connections[tenant].initialize();
+
+        return this._connections[tenant];
     }
 
 }

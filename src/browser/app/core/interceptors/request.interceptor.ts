@@ -11,16 +11,23 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from '@env/environment';
 import { Router } from '@angular/router';
 import { Tools } from '@common/tools.function';
+import { WindowService } from '../services';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
 
-    // private _DOMAIN: string = environment.DOMAIN.replace(/^(http(?:s)?\:\/\/(?:.+?))\/(.+?)$/, `$1${environment.PORT ? ':' + environment.PORT : ''}/$2`);
-    private _DOMAIN: string = Tools.API_URL;
-
     constructor(
         private _router: Router,
-    ) { }
+        private _window: WindowService
+    ) {}
+
+    get _DOMAIN() {
+        if (!this._window.get())
+            return Tools.API_URL;
+
+        const origin = this._window.get().location.origin;
+        return `${origin}${origin.endsWith('/') ? '' : '/'}${environment.API_ROOT}`;
+    }
 
     intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         if (req.url.startsWith('http') || req.url.startsWith('file'))

@@ -55,7 +55,6 @@ export class TenantsRepository extends Repository<TenantEntity> {
             else
                 this.logger.log(`Executed ${successMigrations.length} migration${successMigrations.length > 1 ? 's' : ''} on tenant "${tenant_name}"`);
 
-            await connection.destroy();
             return successMigrations;
         }
     }

@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, ForbiddenException, Get, Post, Res } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JWTConfig } from '@server/config';
-import { GetRequesterToken } from '@server/tools';
+import { GetRequesterTenant, GetRequesterToken } from '@server/tools';
 import { Response } from 'express';
 import { SignInDto, SignUpDto } from './dto';
 import { UserEntity } from './entities';
@@ -19,51 +19,66 @@ export class AuthController {
     @Get('')
     async checkLogggedIn(
         @GetRequesterToken() token: string,
+        @GetRequesterTenant() tenant: string
     ): Promise<IUser> {
-        // if (!token)
+        if (!token)
             return null;
 
-        // try {
-        //     const user: IUser = this._jwtService.verify<IUser>(token);
-        //     if (user) {
-        //         const db_user: UserEntity = await this._usersService.view(user.id);
-        //         Object.keys(db_user.serialize()).forEach(key => {
-        //             user[key] = db_user[key];
-        //         });
+        try {
+            const user: IUser = this._jwtService.verify<IUser>(token);
+            if (user) {
+                const db_user: UserEntity = await this._usersService.view(user.id, tenant);
+                Object.keys(db_user.serialize()).forEach(key => {
+                    user[key] = db_user[key];
+                });
 
-        //         return new User({
-        //             ...db_user.serialize(),
-        //             accessToken: token
-        //         });
-        //     } else
-        //         throw new ForbiddenException(`User doesn't exist!`);
-        // } catch (error) {
-        //     return null;
-        // }
+                return new User({
+                    ...db_user.serialize(),
+                    accessToken: token
+                });
+            } else
+                throw new ForbiddenException(`User doesn't exist!`);
+        } catch (error) {
+            return null;
+        }
     }
 
     @Post('sign-up')
-    signUp(
-        @Body() signUpDto: SignUpDto
-    ): Promise<IUser> {
-        return this._usersService.signUp(signUpDto);
+    async signUp(
+        @Res() response: Response,
+        @Body() credentials: SignUpDto,
+        @GetRequesterTenant() tenant: string
+    ) {
+        const user = await this._usersService.signUp(credentials, tenant);
+
+        const res = await this._setResponseCookie({ ...credentials, remember_me: false }, tenant, response);
+        res.json(user);
+
+        return res;
     }
 
     @Post('sign-in')
     async signIn(
         @Res() response: Response,
         @Body() credentials: SignInDto,
+        @GetRequesterTenant() tenant: string
     ) {
-        const user = await this._usersService.signIn({ ...credentials });
+        const user = await this._usersService.signIn({ ...credentials }, tenant);
 
-        const token = await this._jwtService.signAsync({ ...credentials }, {
+        const res = await this._setResponseCookie(credentials, tenant, response);
+        res.json(user);
+
+        return res;
+    }
+
+    private async _setResponseCookie(credentials: SignInDto, tenant, response: Response) {
+        const token = await this._jwtService.signAsync({ ...credentials, tenant }, {
             expiresIn: credentials.remember_me ? JWTConfig.expiresInRememberMe : JWTConfig.expiresIn
         });
         const token_data: IUser = this._jwtService.verify(token);
         const expires = new Date(token_data.exp * 1000);
         response.cookie('auth', token, { httpOnly: true, expires, sameSite: 'strict' });
 
-        response.json(user);
         return response;
     }
 

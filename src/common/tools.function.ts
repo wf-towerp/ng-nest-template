@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import { environment } from '@env/environment';
 
 const months_full = [
@@ -45,7 +44,6 @@ export class Tools {
 
     static readonly API_DOMAIN = `${environment.DOMAIN.endsWith('/') ? environment.DOMAIN.replace(/\/$/, '') : environment.DOMAIN}${environment.PORT ? ':' + environment.PORT : ''}`;
     static readonly API_URL = `${Tools.API_DOMAIN}${environment.API_ROOT.startsWith('/') ? environment.API_ROOT : '/' + environment.API_ROOT}`;
-    // static readonly API_URL = environment.API_ROOT.replace(/^(http(?:s)?\:\/\/(?:.+?))\/(.+?)$/, `$1${environment.PORT ? ':' + environment.PORT : ''}/$2`);
 
     static formatDate(date: string | Date, format: string): string {
         if (!date)
@@ -331,8 +329,6 @@ export class Tools {
         return `${hours_}:${minutes_}:${seconds_}`;
     }
 }
-
-// export const API_URL = environment.API_URL.replace(/^(http(?:s)?\:\/\/(?:.+?))\/(.+?)$/, `$1${environment.PORT ? ':' + environment.PORT : ''}/$2`);
 
 /**
  * @description Simple Event Emitter class

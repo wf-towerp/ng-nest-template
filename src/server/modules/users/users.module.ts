@@ -7,6 +7,7 @@ import { UsersRepository } from './repositories';
 import { UserEntity } from './entities';
 import { JwtModule } from '@nestjs/jwt';
 import { JWTConfig } from '@server/config';
+import { CoreModule } from '@server/core';
 
 @Module({
     controllers: [
@@ -15,7 +16,6 @@ import { JWTConfig } from '@server/config';
     ],
     imports: [
         TypeOrmModule.forFeature([
-            // UsersRepository,
             UserEntity,
         ]),
         JwtModule.register({
@@ -24,6 +24,7 @@ import { JWTConfig } from '@server/config';
                 expiresIn: JWTConfig.expiresIn
             }
         }),
+        CoreModule
     ],
     providers: [
         UsersService,
@@ -31,7 +32,6 @@ import { JWTConfig } from '@server/config';
     ],
     exports: [
         UsersService,
-        // UsersRepository,
     ]
 })
 export class UsersModule { }

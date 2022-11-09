@@ -18,6 +18,7 @@ import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+    app.enableCors();
     app.setGlobalPrefix('api');
     app.use('/public', express.static(STATIC_UPLOADS_PATH));
     app.useGlobalPipes(new ValidationPipe({

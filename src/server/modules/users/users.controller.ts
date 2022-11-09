@@ -12,7 +12,7 @@ import {
     Query
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { GetRequesterToken } from '@server/tools';
+import { GetRequesterTenant, GetRequesterToken } from '@server/tools';
 import { UserCreateDto } from './dto';
 import { UserUpdateDto } from './dto/user-update.dto';
 import { IUser, User } from './models';
@@ -32,7 +32,10 @@ export class UsersController {
     }
 
     @Get('my-data')
-    async myData(@GetRequesterToken() token: string): Promise<IUser> {
+    async myData(
+        @GetRequesterToken() token: string,
+        @GetRequesterTenant() tenant: string
+    ): Promise<IUser> {
         if (!token)
             throw new BadRequestException('Invalid request!');
 
@@ -40,7 +43,7 @@ export class UsersController {
             const user: IUser = this._jwtService.verify<IUser>(token);
 
             if (user) {
-                const db_user = await this._usersService.view(user.id);
+                const db_user = await this._usersService.view(user.id, tenant);
                 return new User({
                     ...db_user,
                     ...user
